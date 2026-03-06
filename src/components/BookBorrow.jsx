@@ -113,6 +113,7 @@ export default function BookBorrow() {
             <input
               type="date"
               value={targetDate}
+              min={new Date().toISOString().split("T")[0]}
               onChange={(e) => setTargetDate(e.target.value)}
             />
             <button onClick={submitBorrow}>Submit</button>
