@@ -1,0 +1,59 @@
+:root {
+  font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  color: #1f2a36;
+  background-color: #f2f5f8;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  color: #0a5ea8;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background: linear-gradient(180deg, #f8fbff 0%, #f2f5f8 100%);
+}
+
+h2,
+h3 {
+  margin-top: 0;
+}
+
+input,
+select,
+button {
+  font: inherit;
+}
+
+input,
+select {
+  border: 1px solid #c7d3df;
+  border-radius: 8px;
+  padding: 8px 10px;
+  background: #fff;
+}
+
+button {
+  border-radius: 8px;
+  border: 1px solid #9db4c8;
+  padding: 8px 12px;
+  background: #e9f2fa;
+  color: #133453;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #deecf9;
+}
