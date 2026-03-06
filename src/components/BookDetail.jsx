@@ -10,6 +10,7 @@ export function BookDetail() {
 
   const [book, setBook] = useState(null);
   const [form, setForm] = useState({ title: "", author: "", quantity: 0, location: "", status: "ACTIVE" });
+  const [message, setMessage] = useState("");
 
   const isAdmin = useMemo(() => user.role === "ADMIN", [user.role]);
 
@@ -41,7 +42,7 @@ export function BookDetail() {
   }, [id]);
 
   const updateBook = async () => {
-    await fetch(`${API_URL}/api/book/${id}`, {
+    const res = await fetch(`${API_URL}/api/book/${id}`, {
       method: "PATCH",
       credentials: "include",
       headers: { "Content-Type": "application/json" },
@@ -50,14 +51,25 @@ export function BookDetail() {
         quantity: Number(form.quantity),
       }),
     });
-    await loadBook();
+    const data = await res.json().catch(() => ({}));
+    setMessage(data.message || (res.ok ? "Update success" : "Update failed"));
+    if (res.ok) {
+      await loadBook();
+    }
   };
 
   const softDeleteBook = async () => {
-    await fetch(`${API_URL}/api/book/${id}`, {
+    const res = await fetch(`${API_URL}/api/book/${id}`, {
       method: "DELETE",
       credentials: "include",
     });
+    const data = await res.json().catch(() => ({}));
+    if (res.ok) {
+      sessionStorage.setItem("flash_message", data.message || "Delete success");
+    } else {
+      setMessage(data.message || "Delete failed");
+      return;
+    }
     navigate("/books");
   };
 
@@ -140,6 +152,7 @@ export function BookDetail() {
           <button onClick={softDeleteBook} style={{ marginLeft: 8 }}>
             Soft Delete
           </button>
+          {message && <div className="status-msg" style={{ marginTop: 10 }}>{message}</div>}
         </div>
       ) : (
         <div style={{ marginTop: 12 }}>

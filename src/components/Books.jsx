@@ -9,6 +9,7 @@ export default function Books() {
   const [books, setBooks] = useState([]);
   const [filters, setFilters] = useState({ title: "", author: "", includeDeleted: false });
   const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
 
   const [form, setForm] = useState({ title: "", author: "", quantity: 0, location: "" });
   const isAdmin = useMemo(() => user.role === "ADMIN", [user.role]);
@@ -39,6 +40,11 @@ export default function Books() {
   };
 
   useEffect(() => {
+    const flashMessage = sessionStorage.getItem("flash_message");
+    if (flashMessage) {
+      setMessage(flashMessage);
+      sessionStorage.removeItem("flash_message");
+    }
     loadBooks();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -68,6 +74,7 @@ export default function Books() {
       <div style={{ marginBottom: 12 }}>
         <Link to="/borrow">Borrow Requests</Link> | <Link to="/logout">Logout</Link>
       </div>
+      {message && <div className="status-msg">{message}</div>}
 
       <div>
         <input
